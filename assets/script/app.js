@@ -1,69 +1,9 @@
-// 'use strict';
+'use strict';
 
-// // Basic utility function
-// function onEvent(event, selector, callback) {
-//   return selector.addEventListener(event, callback);
-// }
+// Arrays are used to store shape objects
+const shapes = [];
 
-// function select(selector, parent = document) {
-//   return parent.querySelector(selector);
-// }
-
-// const shapeSelect = select('#shape'); // Changed to select, not button
-// const colorSelect = select('#color'); // Changed to select, not button
-// const createButton = select('#create-button');
-// const grid = select('#grid');
-
-// let selectShape = '';
-// let selectColor = '';
-
-// onEvent('change', shapeSelect, () => { // Changed to 'change' event
-//   selectShape = shapeSelect.value; // Retrieve value from select, not button
-// });
-
-// onEvent('change', colorSelect, () => { // Changed to 'change' event
-//   selectColor = colorSelect.value; // Retrieve value from select, not button
-// });
-
-// class Shape {
-//   constructor(name, color) {
-//     this._name = name;
-//     this._color = color;
-//   }
-
-//   getName() {
-//     return this._name;
-//   }
-
-//   getColor() {
-//     return this._color;
-//   }
-
-//   getInfo() {
-//     return `Name: ${this._name}, Color: ${this._color}`;
-//   }
-// }
-
-// function createShape() {
-//   const newShape = new Shape(selectShape, selectColor);
-
-//   const shapeDiv = document.createElement('div');
-//   shapeDiv.classList.add('shape');
-//   shapeDiv.classList.add(newShape._name);
-//   shapeDiv.classList.add(newShape._color);
-//   //shapeDiv.textContent = `${newShape.getName()} (${newShape.getColor()})`;
-
-//   shapeDiv.addEventListener('click', () => {
-//     alert(newShape.getInfo());
-//   });
-
-//   grid.appendChild(shapeDiv);
-// }
-
-// onEvent('click', createButton, createShape);
-
-const shapes = []; // Arrays are used to store shape objects
-
+// Class definition for Shape
 class Shape {
     constructor(name, color) {
         this._name = name;
@@ -80,14 +20,13 @@ class Shape {
         return this._color;
     }
 
-    // methods of returning shape, color
+    // Method for returning shape and color information
     getInfo() {
         return `Shape: ${this._name}, Color: ${this._color}`;
     }
 }
 
-
-// Use a map to convert color code to color name
+// Function to convert color code to color name using a map
 function colorCodeToName(colorCode) {
     const colorMap = {
         '#09f': 'blue',
@@ -99,29 +38,37 @@ function colorCodeToName(colorCode) {
     return colorMap[colorCode.toLowerCase()] || 'unknown';
 }
 
+// Function to create a new shape
 function createShape() {
+    // Check if the quantity of shapes exceeds 24
     if (shapes.length >= 24) {
         console.log('The quantity cannot exceed 24');
-        return; // 
+        return; 
     }
 
-    const shapeType = select('#shape').value;
-    const colorCode = select('#color').value;
-    const colorName = colorCodeToName(colorCode); //Use a map to convert color code to color name
-    const newShape = new Shape(shapeType, colorName);
-    shapes.push(newShape); // 保存新创建的形状对象到数组Save the newly created shape object to the array
+    // Get selected shape type and color code from HTML elements
+    const shapeType = document.getElementById('shape-selector').value;
+    const colorCode = document.getElementById('color-selector').value;
 
+    // Convert color code to color name
+    const colorName = colorCodeToName(colorCode);
+
+    // Create a new Shape object and add it to the shapes array
+    const newShape = new Shape(shapeType, colorName);
+    shapes.push(newShape);
+
+    // Create a new HTML element for the shape
     const shapeDiv = document.createElement('div');
     shapeDiv.className = `shape ${shapeType}`;
-    shapeDiv.style.backgroundColor = colorCode;// 设置背景颜色为颜色代码
+    shapeDiv.style.backgroundColor = colorCode;
 
-    // unit 编号：Calculate unit number: use current shape position as number
+    // Calculate unit number and add click event to display shape information
     const unitNumber = shapes.length;
     shapeDiv.onclick = function () {
-        const infoDiv = select('#shape-info');
-        // output the text: Unit3:square orange
+        const infoDiv = document.getElementById('shape-info');
         infoDiv.textContent = `Unit ${unitNumber}: ${shapeType} ${colorName} `;
     };
 
-    document.getElementById('grid').appendChild(shapeDiv);
+    // Append the shape element to the container in HTML
+    document.getElementById('shape-container').appendChild(shapeDiv);
 }
