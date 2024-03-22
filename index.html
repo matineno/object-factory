@@ -21,24 +21,24 @@
     </head>
     <body>
         <header>
-            <h1>Shape Factory</h1>
+            <h2>Shape Factory</h2>
         </header>
         <main>
-            <select name="Shape" class="shape">
-                <option>Circle</option>
-                <option>Square</option>
+            <select name="Shape" class="shape" id="shape">
+                <option value="circle">Circle</option>
+                <option value="square">Square</option>
             </select>
-            <select name="Color" class="color">
-                <option>Blue</option>
-                <option>Green</option>
-                <option>Orange</option>
-                <option>Pink</option>
-                <option>Purple</option>
+            <select name="Color" class="color" id="color">
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="orange">Orange</option>
+                <option value="pink">Pink</option>
+                <option value="purple">Purple</option>
             </select>
-            <input type="button" class="create-button" value="Create">
-            <div class="output-box">
-              
+            <input type="button" class="create-button" id="create-button" value="Create">
+            <div class="output-box flex gap-5" id="grid">
             </div>
+            <div><p class="output"></p></div>
         </main>
     </body>
 </html>
